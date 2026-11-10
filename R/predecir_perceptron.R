@@ -40,8 +40,13 @@ predecir_perceptron <- function(modelo, X) {
     stop("El sesgo debe ser un numero valido.")
   }
 
-  activacion <- drop(X %*% pesos + sesgo)
+  X <- scale(
+  X,
+  center = modelo$medias,
+  scale = modelo$desviaciones
+)
 
+activacion <- drop(X %*% pesos + sesgo)
   predicciones <- ifelse(activacion >= 0, 1L, 0L)
 
   return(as.integer(predicciones))
